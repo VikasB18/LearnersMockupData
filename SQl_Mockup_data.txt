@@ -1,0 +1,86 @@
+2.  
+
+ SELECT *
+FROM users
+LIMIT 200;
+
+SELECT *
+FROM progress
+LIMIT 200;
+
+What are the Top 25 schools (.edu domains)?
+How many .edu learners are located in New York?
+The mobile_app column contains either mobile-user or NULL. How many of these Codecademy learners are using the mobile app?
+
+SELECT email_domain, COUNT (*) as students
+FROM users
+WHERE email_domain LIKE '%.edu'
+GROUP BY 1
+ORDER BY students DESC
+LIMIT 25;
+
+
+SELECT COUNT(*) as 'Learners in New York'
+FROM users
+WHERE city = 'New York';
+
+SELECT COUNT(*) as 'Learners using mobile app'
+FROM users
+WHERE mobile_app IS NOT NULL;
+
+3.     List sign-up counts per hour formatting
+
+SELECT
+ strftime('%H', sign_up_at) AS 'Hour of the day', COUNT(*) AS 'Learners signed up'
+FROM users
+GROUP BY 1;
+
+4. 
+Join the two tables using JOIN and then see what you can dig out of the data!
+
+Do different schools (.edu domains) prefer different courses?
+SELECT u.email_domain, 
+       p.learn_cpp, 
+       p.learn_sql, 
+       p.learn_html, 
+       p.learn_javascript, 
+       p.learn_java 
+FROM users as u 
+JOIN progress as p 
+ON u.user_id = p.user_id 
+WHERE u.email_domain LIKE '%.edu' 
+GROUP BY u.email_domain;
+
+What courses are the New Yorkers students taking?
+
+SELECT u.city, 
+       p.learn_cpp, 
+       p.learn_sql, 
+       p.learn_html, 
+       p.learn_javascript, 
+       p.learn_java 
+FROM users u 
+JOIN progress p 
+ON u.user_id = p.user_id 
+WHERE u.city LIKE '%New York%' 
+GROUP BY u.city;
+
+
+What courses are the Chicago students taking?
+
+SELECT u.city, 
+       p.learn_cpp, 
+       p.learn_sql, 
+       p.learn_html, 
+       p.learn_javascript, 
+       p.learn_java 
+FROM users u 
+JOIN progress p 
+ON u.user_id = p.user_id 
+WHERE u.city LIKE '%Chicago%' 
+GROUP BY u.city;
+
+
+
+
+
